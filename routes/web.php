@@ -18,14 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware('auth')->group(function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 
     // Projects
     Route::post('/projects/delete/{id}', [ProjectController::class, 'destroy'])->name('projects.delete');
@@ -42,10 +40,10 @@ Route::middleware('auth')->group(function () {
 
     // Category
     Route::get('/projects/{id}/category', [CategoryController::class, 'show'])->name('categories');
+    Route::post('/projects/{id}/category/delete/{category_id}', [CategoryController::class, 'destroy'])->name('category.delete');
     Route::get('/projects/{id}/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/projects/{id}/category/{category_id}', [CategoryController::class, 'categoryDetail'])->name('categories.detail');
-    
-    // Route::post('/projects/{id}/category/create', [CategoryController::class, 'store'])->name('category.create');
+    Route::post('/projects/{id}/category/create', [CategoryController::class, 'store'])->name('category.create');
 
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users');

@@ -13,11 +13,17 @@ class Subcategory extends Model
         'categories_id',
         'title',
         'description',
+        'lvl',
         'total'
     ];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
+    public function billings()
+    {
+        return $this->hasMany(Billing::class,'subcategories_id');
+    }
 }

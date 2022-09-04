@@ -18,13 +18,15 @@
                     </x-nav-link>
                 </div>
 
+                @can('crud-users')
                 <!-- Users -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                         {{ __('Users') }}
                     </x-nav-link>
                 </div>
-
+                @endcan
+                
                 <!-- Projects -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')">

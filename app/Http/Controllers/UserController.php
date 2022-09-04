@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -12,6 +14,8 @@ class UserController extends Controller
     //
     public function index()
     {
+        if(!Gate::allows('crud-users')) abort('403');
+
         $users = User::where('is_admin', 0)->paginate(10);
         $count = User::where('is_admin', 0)->count();
 
@@ -20,11 +24,14 @@ class UserController extends Controller
 
     public function create()
     {
+        if(!Gate::allows('crud-users')) abort('403');
+
         return view('users.create');
     }
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -42,6 +49,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        if(!Gate::allows('crud-users')) abort('403');
+
         $user = User::where('id', $id)->first();
         return view('users.update', compact('user'));
     }

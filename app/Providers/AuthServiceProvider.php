@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +29,22 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // only admins can crud the users
+        Gate::define('crud-users', function (User $user) {
+            return $user->is_admin == 1;
+        });
+
+        // Only admin can create update delete the projects
+        Gate::define('crud-project', function (User $user) {
+            return $user->is_admin == 1;
+        });
+
+        // 
+        Gate::define('see-project-detail', function (User $user, $projects, $requestId) {
+            if($user->is_admin != 1)
+                return in_array($requestId, array_column($projects->toArray(), 'id'));
+
+            return true;
+        });
     }
 }

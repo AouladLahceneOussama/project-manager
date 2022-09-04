@@ -48,14 +48,20 @@
                                     <span class="px-2 font-semibold leading-tight text-xs text-slate-700">{{ $category->total }}</span>
                                 </td>
                                 <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <a href="/projects/{{$category->project_id}}/category/{{$category->id}}"><i class="fa-solid fa-eye text-indigo-500 p-1 cursor-pointer text-xs"></i></a>
-                                    <i class="fa-solid fa-pen text-green-500 p-1 cursor-pointer text-xs"></i>
-                                    <i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i>
+                                    <div class="flex justify-center items-center">
+                                        <a href="/projects/{{$category->project_id}}/category/{{$category->id}}">
+                                            <i class="fa-solid fa-eye text-indigo-500 p-1 cursor-pointer text-xs"></i>
+                                        </a>
+                                        <form method="post" action="{{ route('category.delete', [$category->project_id, $category->id]) }}">
+                                            @csrf
+                                            <button onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center py-4">
+                                <td colspan="6" class="text-center py-4">
                                     {{ __('No Categories')}}
                                 </td>
                             </tr>
