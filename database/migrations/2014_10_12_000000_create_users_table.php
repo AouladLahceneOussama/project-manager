@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -23,6 +25,15 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$MEnCIx61wrXkqMKAjqNbeeduiq4qtz5tbkxvYy3Jf4AlWwXMJXOG.', // oussama.123
+            'is_admin' => 1,
+            'remember_token' => Str::random(10),
+        ]);
     }
 
     /**
