@@ -14,6 +14,7 @@ class CategoryForm extends Component
     public $showSubCategory = false;
     public $project_id;
     public $subCategory = [];
+    public $subCategoryRepeat = 1;
     public $billings = [];
     public $title = '';
     public $description = '';
@@ -45,29 +46,32 @@ class CategoryForm extends Component
     public function mount()
     {
         $this->subCategory = [
-            '1' => ['title' => '', 'description' => '', 'total' => 0],
-            '2' => ['title' => '', 'description' => '', 'total' => 0]
+            ['title' => '', 'description' => '', 'total' => 0],
         ];
 
         $this->billings = [
-            '1' => [],
-            '2' => []
+            [],
         ];
-        // dd($this->billings);
     }
 
-    // Show / Hide the subcategory form
-    public function showSubCategoryForm()
+    // Add the subCaegory form
+    public function addSubCategory()
     {
-        $this->showSubCategory = !$this->showSubCategory;
+        $this->validate([
+            'subCategoryRepeat' => ['required', 'numeric', 'gt:0'],
+        ]);
 
-        // empty the array
-        if (!$this->showSubCategory) {
-            $this->subCategory = [
-                '1' => ['title' => '', 'description' => '', 'total' => 0],
-                '2' => ['title' => '', 'description' => '', 'total' => 0]
-            ];
+        for ($i = 0; $i < $this->subCategoryRepeat; $i++) {
+            $this->subCategory[] = ['title' => '', 'description' => '', 'total' => 0];
+            $this->billings[count($this->subCategory) - 1] = [];
         }
+    }
+
+    // Remove the subCategory form
+    public function removeSubCategory($index)
+    {
+        unset($this->subCategory[$index]);
+        $this->subCategory = array_values($this->subCategory);
     }
 
     // Add new Billing
@@ -110,60 +114,44 @@ class CategoryForm extends Component
     {
         $category = '';
 
-        if (!$this->showSubCategory) {
+        $this->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'max:255'],
+            'subCategory.*.title' => ['required', 'string'],
+            'subCategory.*.description' => ['required', 'max:255'],
+            'subCategory.*.total' => ['required', 'gt:0'],
+            "billings.*.*.title" => ['required', 'string'],
+            "billings.*.*.total" => ['required', 'gt:0'],
+        ]);
 
-            $this->validate([
-                'title' => ['required', 'string'],
-                'description' => ['required', 'max:255'],
-                'total' => ['required', 'gt:0'],
+        // Save the category
+        $category = Category::create([
+            'project_id' => $this->project_id,
+            'managed_by' => Auth::id(),
+            'title' => $this->title,
+            'description' => $this->description,
+            'total' => array_sum(array_column($this->subCategory, 'total')),
+        ]);
+
+        // Save the sub-category
+        foreach ($this->subCategory as $index => $sub) {
+            $subC = Subcategory::create([
+                'categories_id' => $category->id,
+                'title' => $sub['title'],
+                'description' => $sub['description'],
+                'total' => $sub['total'],
             ]);
 
-            $category = Category::create([
-                'project_id' => $this->project_id,
-                'managed_by' => Auth::id(),
-                'title' => $this->title,
-                'description' => $this->description,
-                'total' => $this->total,
-            ]);
-        } else {
-            $this->validate([
-                'title' => ['required', 'string'],
-                'description' => ['required', 'max:255'],
-                'subCategory.*.title' => ['required', 'string'],
-                'subCategory.*.description' => ['required', 'max:255'],
-                'subCategory.*.total' => ['required', 'gt:0'],
-                "billings.*.*.title" => ['required', 'string'],
-                "billings.*.*.total" => ['required', 'gt:0'],
-            ]);
-
-            // Save the category
-            $category = Category::create([
-                'project_id' => $this->project_id,
-                'managed_by' => Auth::id(),
-                'title' => $this->title,
-                'description' => $this->description,
-                'total' => $this->subCategory[1]['total'] + $this->subCategory[2]['total'],
-            ]);
-
-            // Save the sub-category
-            foreach ($this->subCategory as $index => $sub) {
-                $subC = Subcategory::create([
-                    'categories_id' => $category->id,
-                    'title' => $sub['title'],
-                    'description' => $sub['description'],
-                    'total' => $sub['total'],
+            // Save the Billings
+            foreach ($this->billings[$index] as $b) {
+                Billing::create([
+                    'subcategories_id' => $subC->id,
+                    'title' => $b['title'],
+                    'total' => $b['total']
                 ]);
-
-                // Save the Billings
-                foreach ($this->billings[$index] as $b) {
-                    Billing::create([
-                        'subcategories_id' => $subC->id,
-                        'title' => $b['title'],
-                        'total' => $b['total']
-                    ]);
-                }
             }
         }
+
 
         // update the project total price
         $newTotal = Category::where('project_id', $this->project_id)->sum('total');

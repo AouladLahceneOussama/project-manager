@@ -45,10 +45,10 @@
             </div>
 
             @if($category->subcategories->count() >0)
-            <div class="flex justify-between items-center space-x-8 mt-8">
+            <div class="flex justify-between items-center flex-wrap mt-8">
 
                 @foreach($category->subcategories as $sub)
-                <div class="w-1/2">
+                <div class="my-4" style="width:48%">
                     <div class="mb-6">
                         <span class="px-6 py-3 font-bold text-center text-white uppercase align-middle border-0 rounded-lg text-xs bg-gray-700">
                             {{ __('Total') }} : {{ $sub->total}} DH

@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="{{ $showSubCategory ? 'hidden' : 'flex' }} flex-wrap -mx-3 mb-4">
+    <!-- <div class="{{ $showSubCategory ? 'hidden' : 'flex' }} flex-wrap -mx-3 mb-4">
         <div class="w-full px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="total">
                 {{ __('Total') }} (DH)
@@ -33,25 +33,37 @@
             <input type="text" name="total" wire:model="total" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Total" id="total" />
             @error('total') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
         </div>
-    </div>
+    </div> -->
 
-    <div class="flex justify-start items-center space-x-2 w-full mb-3">
-        <div class="flex justify-start items-center">
-            <button wire:click="showSubCategoryForm" type="button" class="bg-gray-700 text-white py-2 px-5 rounded-md text-sm cursor-pointer mb-1">{{ $showSubCategory ? __('Remove Sub Category') :__('Add Sub Category') }}</button>
+    <div class="flex justify-between items-end space-x-2 w-full mb-3">
+        <div class="grow">
+            <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="subCategoryRepeat">
+                {{ __('SubCategory Repeat Number') }}
+            </label>
+            <input type="number" wire:model="subCategoryRepeat" min="1" value="1" name="title" class="text-sm block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Sub Category Repeat" id="subCategoryRepeat" />
+            @error("subCategoryRepeat") <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+        </div>
+        <div>
+            <button wire:click.prevent="addSubCategory" type="button" class="bg-gray-700 text-white py-2 px-5 rounded-md text-sm cursor-pointer">{{ __('Add Sub Category') }}</button>
         </div>
     </div>
 
-    @if($showSubCategory)
+    @if(count($subCategory) > 0)
     <div class="w-full mb-3">
         <span class="text-gray-400 text-xs ">{{ __('Add The Sub Category Informations')}}</span>
         <div class="bg-gray-200 w-full h-px"></div>
     </div>
 
-    <div class="w-full flex justify-between items-start mb-4 space-x-12">
+    <div class="w-full flex justify-between items-start flex-wrap mb-4 relative">
         @foreach ($subCategory as $index => $sub)
 
-        <div wire:key="012{{ $loop->index }}" class="w-1/2">
-            <div class="flex flex-wrap -mx-3 mb-4">
+        <div wire:key="012{{ $loop->index }}" class="relative mb-8" style="width:48%;">
+            @if(!$loop->first)
+            <div class="absolute top-0 right-0">
+                <button type="buton" wire:click.prevent="removeSubCategory({{$index}})" class="bg-red-500 w-6 h-6 rounded-full"><i class="fa-solid fa-trash text-xs text-white"></i></button>
+            </div>
+            @endif
+            <div class="flex flex-wrap -mx-3 mb-4 mt-6">
                 <div class="w-full px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="title_{{ $index }}">
                         {{ __('Title') }}
@@ -74,7 +86,7 @@
             <div class="w-full mb-3">
                 <div class="flex justify-between">
                     <span class="text-gray-400 text-xs ">{{ __('Add The Billings')}}</span>
-                    <button wire:click.prevent="addBillingForm('{{$index}}')" type="button" class="text-gray-400 rounded-full"><i class="fa-solid fa-plus-circle"></i></button>
+                    <button wire:click.prevent="addBillingForm({{$index}})" type="button" class="text-gray-400 rounded-full"><i class="fa-solid fa-plus-circle"></i></button>
                 </div>
                 <div class="bg-gray-200 w-full h-px"></div>
             </div>
@@ -101,7 +113,7 @@
                     </div>
 
                     @if(!$loop->first)
-                    <button wire:click.prevent="removeBillingForm('{{$index}}','{{$indexB}}')" type="button" class="mt-6">
+                    <button wire:click.prevent="removeBillingForm({{$index}},{{$indexB}})" type="button" class="mt-6">
                         <i class="fa-solid fa-times-circle text-red-400 cursor-pointer"></i>
                     </button>
                     @endif
