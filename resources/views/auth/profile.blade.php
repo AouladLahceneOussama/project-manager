@@ -8,6 +8,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                @if(session()->has('message'))
+                <div class="bg-green-300 rounded-md py-2 px-4 text-green-800 my-4 mx-8">
+                    {{ session()->get('message') }}
+                </div>
+                @endif
                 <form method="post" class="w-full py-2 px-8 mt-4 h-full overflow-y-auto">
                     @csrf
 
@@ -22,7 +27,7 @@
                             <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="name">
                                 {{ __('Name') }}
                             </label>
-                            <input type="text" name="name" value="{{ $user->name }}" class="text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Name" id="name" />
+                            <input type="text" name="name" value="{{ $user->name }}" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Name" id="name" />
                             @error('name') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                         </div>
 
@@ -30,7 +35,7 @@
                             <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="email">
                                 {{ __('Email') }}
                             </label>
-                            <input type="email" name="email" value="{{ $user->email }}" disabled class="disabled:opacity-75 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Email" id="email" />
+                            <input type="email" name="email" value="{{ $user->email }}" disabled class="disabled:opacity-75 text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Email" id="email" />
                             @error('email') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                         </div>
 
@@ -42,15 +47,15 @@
                             <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="password">
                                 {{ __('Password') }}
                             </label>
-                            <input type="password" name="password" class="text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Password" id="password" />
+                            <input type="password" name="password" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Password" id="password" />
                             @error('password') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="confirm_password">
-                                {{ __('Confirm Password') }}
+                                {{ __('Confirmer Password') }}
                             </label>
-                            <input type="password" name="password_confirmation" class="text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirm password" id="confirm_password" />
+                            <input type="password" name="password_confirmation" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirmer Password" id="confirm_password" />
                             @error('password') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                         </div>
 
@@ -58,7 +63,7 @@
 
                     <div class="w-full mb-3">
                         <div class="flex justify-end items-center">
-                            <button class="bg-gray-700 text-white py-2 px-5 rounded-md text-sm cursor-pointer mb-1">{{ __('Update')}}</button>
+                            <button class="bg-gray-700 justify-self-end text-white py-2 px-5 rounded-md text-sm cursor-pointer mb-1">{{ __('Modify')}}</button>
                         </div>
                     </div>
 

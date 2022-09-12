@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Category Detail') }}
+            {{ __('Details of category') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-6 space-x-8">
                 <span class="px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer active:opacity-85 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gray-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">
-                    {{ __('Total') }} : {{ $category->total}} DH
+                    {{ __('Total') }} : {{ $category->total }} DH
                 </span>
             </div>
             <div class="bg-white py-4 overflow-hidden shadow-sm sm:rounded-lg">
@@ -18,7 +18,7 @@
                     <div class="w-full py-2 px-8 h-full overflow-y-auto">
 
                         <div class="w-full mb-3">
-                            <span class="text-gray-400 text-xs ">{{ __('Category Detail')}}</span>
+                            <span class="text-gray-400 text-xs ">{{ __('Detail of category')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
                         </div>
 
@@ -45,7 +45,7 @@
             </div>
 
             @if($category->subcategories->count() >0)
-            <div class="flex justify-between items-center flex-wrap mt-8">
+            <div class="flex justify-between items-start flex-wrap mt-8">
 
                 @foreach($category->subcategories as $sub)
                 <div class="my-4" style="width:48%">
@@ -64,19 +64,32 @@
                         </p>
 
                         <div class="w-full mt-3 px-3">
-                            <span class="text-gray-400 text-xs ">{{ __('Billing Detail')}}</span>
+                            <span class="text-gray-400 text-xs ">{{ __('Detail of billings')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
                         </div>
 
                         <div class="mt-4">
                             @foreach( $sub->billings as $belling)
-                            <div class="my-3 flex justify-between items-center px-16">
-                                <p class="text-sm">{{ $belling->title }}</p>
-                                <p class="font-bold text-sm">{{ $belling->total }} DH</p>
+                            <div class="my-3 flex justify-between items-center px-3">
+                                <div class="flex justify-start items-start space-x-5">
+                                    <div>
+                                      <p class="text-sm">{{ $belling->title }} </p>
+                                    <p class="text-sm text-gray-400">{{ $belling->info }} </p>     
+                                    </div>
+                                     <p class="font-bold text-sm">{{ $belling->total }} DH</p>
+                                </div>
+                                
+                                @if(Auth::user()->is_admin == 1)
+                                <livewire:remark-input :belling="$belling" :wire:key="$subcategories->id.'_'.$belling->id">
+                                @else
+                                @if($belling->remark != '')
+                                <span class="text-xs block appearance-none rounded-md bg-red-600 px-8 py-2 text-white font-bold">{{$belling->remark}}</span>
+                                @endif
+                                @endif
                             </div>
                             @if(!$loop->last)
                             <div class="flex justify-center">
-                                <div class="bg-gray-200 w-3/4 h-px"></div>
+                                <div class="bg-gray-200 w-5/6 h-px"></div>
                             </div>
                             @endif
                             @endforeach

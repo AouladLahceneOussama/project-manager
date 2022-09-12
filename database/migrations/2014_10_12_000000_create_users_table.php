@@ -26,14 +26,14 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$MEnCIx61wrXkqMKAjqNbeeduiq4qtz5tbkxvYy3Jf4AlWwXMJXOG.', // oussama.123
-            'is_admin' => true,
-            'remember_token' => Str::random(10),
-        ]);
+        // User::create([
+        //     'name' => 'Admin',
+        //     'email' => 'admin@gmail.com',
+        //     'email_verified_at' => now(),
+        //     'password' => '$2y$10$MEnCIx61wrXkqMKAjqNbeeduiq4qtz5tbkxvYy3Jf4AlWwXMJXOG.', // oussama.123
+        //     'is_admin' => true,
+        //     'remember_token' => Str::random(10),
+        // ]);
     }
 
     /**

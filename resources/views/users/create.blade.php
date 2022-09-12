@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create User') }}
+            {{ __('Add Users') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                         @csrf
 
                         <div class="w-full mb-3">
-                            <span class="text-gray-400 text-xs ">{{ __('Personal Informations')}}</span>
+                            <span class="text-gray-400 text-xs ">{{ __('Informations personnelles')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
                         </div>
 
@@ -50,7 +50,7 @@
                                 <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="confirm_password">
                                     {{ __('Confirm Password') }}
                                 </label>
-                                <input type="password" name="password_confirmation" class="text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirm password" id="confirm_password" />
+                                <input type="password" name="password_confirmation" class="text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirm Password" id="confirm_password" />
                                 @error('password') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                             </div>
 

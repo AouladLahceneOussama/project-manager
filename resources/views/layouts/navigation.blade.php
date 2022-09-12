@@ -22,11 +22,11 @@
                 <!-- Users -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
-                        {{ __('Users') }}
+                        {{ __('users') }}
                     </x-nav-link>
                 </div>
                 @endcan
-                
+
                 <!-- Projects -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')">
@@ -54,16 +54,15 @@
                     <x-slot name="content">
                         <!-- maange profile -->
                         <x-dropdown-link href="{{ route('profile') }}">
-                                {{ __('Profile') }}
+                            {{ __('Profile') }}
                         </x-dropdown-link>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Logout') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -90,6 +89,22 @@
             </x-responsive-nav-link>
         </div>
 
+        @can('crud-users')
+        <!-- Users -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                {{ __('users') }}
+            </x-nav-link>
+        </div>
+        @endcan
+
+        <!-- Projects -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')">
+                {{ __('Projects') }}
+            </x-nav-link>
+        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
@@ -102,8 +117,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

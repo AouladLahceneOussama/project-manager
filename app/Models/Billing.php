@@ -12,10 +12,13 @@ class Billing extends Model
     protected $fillable = [
         'subcategories_id',
         'title',
+        'info',
+        'remark',
         'total'
     ];
 
-    public function subcategory(){
+    public function subcategory()
+    {
         return $this->belongsTo(Subcategory::class);
     }
 }

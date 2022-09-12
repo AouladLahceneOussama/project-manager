@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,5 +75,14 @@ class ProjectController extends Controller
     {
         Project::where('id', $id)->delete();
         return back();
+    }
+
+    public function generatePdf()
+    {
+        $projects = Project::with(['user', 'manager'])->orderBy('created_at', 'desc')->paginate(10);
+        $count = Project::count();
+
+        $pdf = PDF::loadView('PDFs.project', ['projects' => $projects, 'count' => $count]);
+        return $pdf->download('invoice.pdf');
     }
 }

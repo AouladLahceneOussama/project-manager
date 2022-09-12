@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Update User') }}
+            {{ __('Modifer Utilisateur') }}
         </h2>
     </x-slot>
 
@@ -32,7 +32,7 @@
                                 <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="email">
                                     {{ __('email') }}
                                 </label>
-                                <input type="email" name="email" value="{{ $user->name }}" disabled class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Email" id="email" />
+                                <input type="email" name="email" value="{{ $user->email }}" disabled class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Email" id="email" />
                                 @error('email') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -51,15 +51,15 @@
                                 <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="confirm_password">
                                     {{ __('Confirm Password') }}
                                 </label>
-                                <input type="password" name="password_confirmation" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirm password" id="confirm_password" />
-                                @error('password') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+                                <input type="password" name="password_confirmation" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Confirm Password" id="confirm_password" />
+                                @error('password_confirmation') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                             </div>
 
                         </div>
 
                         <div class="w-full mb-3">
                             <div class="flex justify-end items-center">
-                                <button class="bg-gray-700 text-white py-2 px-5 rounded-md text-sm cursor-pointer mb-1">{{ __('Update')}}</button>
+                                <button class="bg-gray-700 text-white py-2 px-5 rounded-md text-sm cursor-pointer mb-1">{{ __('Modify')}}</button>
                             </div>
                         </div>
 

@@ -19,7 +19,7 @@
 
                     <x-table>
                         <x-slot name="title">
-                            {{ __('Projects Table') }} ({{ $count}})
+                            {{ __('Table of projects ') }} ({{ $count}})
                         </x-slot>
                         <x-slot name="thead">
                             <tr>
@@ -27,7 +27,7 @@
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Project') }}</th>
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Created_by') }}</th>
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Managed_by') }}</th>
-                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Creating Time') }}</th>
+                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Created_at') }}</th>
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Total') }} (DH)</th>
                                 <th class="px-4 py-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Actions') }}</th>
                             </tr>
@@ -70,7 +70,7 @@
                                         <a href="{{ route('projects.update', $project->id) }}"><i class="fa-solid fa-pen text-green-500 p-1 cursor-pointer text-xs"></i></a>
                                         <form method="post" action="{{ route('projects.delete', $project->id) }}">
                                             @csrf
-                                            <button onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
+                                            <button onclick="return confirm('Etes-vous sur de supprimer cette element?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
                                         </form>
                                         @endcan
                                     </div>
@@ -79,7 +79,7 @@
                             @empty
                             <tr>
                                 <td colspan="7" class="text-center py-4">
-                                    {{ __('No Projects')}}
+                                    {{ __('Table of projects is empty')}}
                                 </td>
                             </tr>
                             @endforelse

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Project') }}
+            {{ __('Add Project') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                         @csrf
 
                         <div class="w-full mb-3">
-                            <span class="text-gray-400 text-xs ">{{ __('Project Informations')}}</span>
+                            <span class="text-gray-400 text-xs ">{{ __('Informations of the project')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
                         </div>
 
@@ -29,26 +29,22 @@
                         </div>
 
                         <div class="w-full mb-3">
-                            <span class="text-gray-400 text-xs ">{{ __('Manager Informations')}}</span>
+                            <span class="text-gray-400 text-xs ">{{ __('Informations of manager')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
                         </div>
 
-                        <div class="w-full -mx-3 mb-4">
+                        <div class="w-full mb-4">
+                            <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="manager">
+                                Manager
+                            </label>
+                            <select name="manager" class="text-sm ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" id="manager">
+                                <option value="">{{ __('Please pick the project manager') }}</option>
 
-                            <div class="w-full px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="manager">
-                                    Manager
-                                </label>
-                                <select name="manager" class="text-sm ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" id="manager">
-                                    <option value="">{{ __('Please pick a manager') }}</option>
-                                    
-                                    @foreach($managers as $manager)
-                                    <option value="{{ $manager->id }}">{{ $manager->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('manager') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
-
-                            </div>
+                                @foreach($managers as $manager)
+                                <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('manager') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="w-full mb-3">

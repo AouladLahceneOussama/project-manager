@@ -30,4 +30,9 @@ class Project extends Model
     {
         return $this->hasMany(Category::class);
     }
+
+    public function archives()
+    {
+        return $this->hasMany(Archive::class);
+    }
 }

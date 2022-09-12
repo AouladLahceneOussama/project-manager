@@ -82,7 +82,7 @@ class CategoryForm extends Component
         ]);
 
         $count = count($this->billings[$index]) + 1;
-        $this->billings[$index][] = ['title' => $this->subCategory[$index]['title'] . '-' . $count, 'total' => 0];
+        $this->billings[$index][] = ['title' => $this->subCategory[$index]['title'] . '-' . $count, 'info' => '', 'total' => 0];
 
         if ($count >= 2)
             $this->subCategory[$index]['total'] = $this->calculateTotal($index);
@@ -121,6 +121,7 @@ class CategoryForm extends Component
             'subCategory.*.description' => ['required', 'max:255'],
             'subCategory.*.total' => ['required', 'gt:0'],
             "billings.*.*.title" => ['required', 'string'],
+            "billings.*.*.info" => ['required', 'string'],
             "billings.*.*.total" => ['required', 'gt:0'],
         ]);
 
@@ -147,6 +148,7 @@ class CategoryForm extends Component
                 Billing::create([
                     'subcategories_id' => $subC->id,
                     'title' => $b['title'],
+                    'info' => $b['info'],
                     'total' => $b['total']
                 ]);
             }

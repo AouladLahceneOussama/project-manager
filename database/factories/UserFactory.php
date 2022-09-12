@@ -19,11 +19,11 @@ class UserFactory extends Factory
     {
 
         return [
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'name' => $this->faker->name(),
+            'email' => $this->faker->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$MEnCIx61wrXkqMKAjqNbeeduiq4qtz5tbkxvYy3Jf4AlWwXMJXOG.', // oussama.123
-            'is_admin' => 1,
+            'is_admin' => rand(0,1),
             'remember_token' => Str::random(10),
         ];
     }

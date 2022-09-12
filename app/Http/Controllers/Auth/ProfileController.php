@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 class ProfileController extends Controller
@@ -20,6 +21,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -27,9 +29,9 @@ class ProfileController extends Controller
 
         User::where('id', Auth::id())->update([
             'name' => $request->name,
-            'password' => $request->password
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('profile');
+        return redirect()->back()->with('message', 'Password updated succesfully!');
     }
 }

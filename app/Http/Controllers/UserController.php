@@ -64,10 +64,10 @@ class UserController extends Controller
 
         User::where('id', $request->id)->update([
             'name' => $request->name,
-            'password' => $request->password
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('profile');
+        return redirect()->route('users');
     }
 
     public function destroy($id)

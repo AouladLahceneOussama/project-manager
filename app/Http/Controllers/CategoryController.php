@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archive;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\Subcategory;
@@ -18,8 +19,9 @@ class CategoryController extends Controller
 
         $categories = Category::with(['project', 'subcategories'])->where('project_id', $id)->get();
         $count = Category::where('project_id', $id)->count();
+        $archives = Archive::where('project_id', $id)->count();
 
-        return view('category.index', compact('categories', 'count'));
+        return view('category.index', compact('categories', 'count', 'id', 'archives'));
     }
 
     public function create($id)
@@ -33,6 +35,12 @@ class CategoryController extends Controller
 
         $category = Category::with('subcategories')->where('id', $category_id)->first();
         return view('category.details', compact('category'));
+    }
+
+    // Show the update page
+    public function update($id, $category_id)
+    {
+        return view('category.update', compact('id', 'category_id'));
     }
 
     public function destroy($id, $category_id)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchivesController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectController;
@@ -32,7 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/update/{id}', [ProjectController::class, 'edit'])->name('projects.update');
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+    Route::get('/projects/pdf', [ProjectController::class, 'generatePdf'])->name('projects.pdf');
     
+    // Archives
+    Route::get('/projects/{id}/category/archives' ,[ArchivesController::class, 'index'])->name('archives');
+    Route::post('/projects/{id}/category/archives/create', [ArchivesController::class, 'store'])->name('archives.create');
+    Route::post('/projects/{id}/category/archives/delete/{archive_id}', [ArchivesController::class, 'destroy'])->name('archives.delete');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -44,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{id}/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/projects/{id}/category/{category_id}', [CategoryController::class, 'categoryDetail'])->name('categories.detail');
     Route::post('/projects/{id}/category/create', [CategoryController::class, 'store'])->name('category.create');
+    Route::get('/projects/{id}/category/{category_id}/update', [CategoryController::class, 'update'])->name('category.update');
+    // Route::post('/projects/{id}/category/{category_id}/update', [CategoryController::class, 'save'])->name('category.update');
 
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users');

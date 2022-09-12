@@ -1,11 +1,15 @@
 {
+  "resources/img/logo.jpeg": {
+    "file": "assets/logo.13a5fbf5.jpeg",
+    "src": "resources/img/logo.jpeg"
+  },
   "resources/js/app.js": {
     "file": "assets/app.ab93cf8a.js",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.d7e8b0ed.css",
+    "file": "assets/app.f71155c4.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }

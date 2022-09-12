@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Categories') }}
+            {{ __('Cases') }}
         </h2>
     </x-slot>
 
@@ -12,12 +12,38 @@
                     {{ __('Add Category') }}
                 </a>
             </div>
+
+            <!-- Add Archives -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-4">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center py-5 px-4">
+                        <div>
+                            <span>{{ __('Archives') }} ({{ $archives }})</span>
+                        </div>
+
+                        <form method="post" action="{{ route('archives.create', $id) }}" enctype="multipart/form-data" class="flex justify-center items-center space-x-1">
+                            @csrf
+                            <input type="hidden" name="project_id" value="{{$id}}">
+                            <input name="archive_file" class="w-full text-sm text-gray-600 bg-gray-100 rounded-md border border-gray-300cursor-pointer outline-none focus:outline-none" type="file">
+                            @error('archive_file') <span class="text-red-500 text-xs italic px-2">{{ $message }}</span> @enderror
+
+                            <div class="flex justify-between space-x-8">
+                                <button><i class="fa-solid fa-circle-check text-gray-800 cursor-pointer" id="file"></i></button>
+                                <a href="{{ route('archives', $id) }}"><i class="fa-solid fa-eye text-indigo-500 cursor-pointer"></i></a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Case tables -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
                     <x-table>
                         <x-slot name="title">
-                            {{ __('Categories Table') }} ({{ $count }})
+                            {{ __('Table of categories') }} ({{ $count }})
                         </x-slot>
                         <x-slot name="thead">
                             <tr>
@@ -52,9 +78,10 @@
                                         <a href="/projects/{{$category->project_id}}/category/{{$category->id}}">
                                             <i class="fa-solid fa-eye text-indigo-500 p-1 cursor-pointer text-xs"></i>
                                         </a>
+                                        <a href="{{ route('category.update', [$category->project_id, $category->id] ) }}"><i class="fa-solid fa-pen text-green-500 p-1 cursor-pointer text-xs"></i></a>
                                         <form method="post" action="{{ route('category.delete', [$category->project_id, $category->id]) }}">
                                             @csrf
-                                            <button onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
+                                            <button onclick="return confirm('Etes-vous sur de supprimer cette element?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
                                         </form>
                                     </div>
                                 </td>
@@ -62,13 +89,12 @@
                             @empty
                             <tr>
                                 <td colspan="6" class="text-center py-4">
-                                    {{ __('No Categories')}}
+                                    {{ __('Table of categories is empty')}}
                                 </td>
                             </tr>
                             @endforelse
                         </x-slot>
                     </x-table>
-
                 </div>
             </div>
         </div>

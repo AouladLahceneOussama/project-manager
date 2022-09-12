@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-6 space-x-8">
                 <a href="{{ route('users.create') }}" class="px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer active:opacity-85 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gray-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">
-                    {{ __('Add User') }}
+                    {{ __('Add users') }}
                 </a>
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -17,15 +17,15 @@
 
                     <x-table>
                         <x-slot name="title">
-                            {{ __('Users Table') }} ({{ $count }})
+                            {{ __('Table of users') }} ({{ $count }})
                         </x-slot>
                         <x-slot name="thead">
                             <tr>
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('ID') }}</th>
-                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Name') }}</th>
+                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Nom') }}</th>
                                 <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Email') }}</th>
-                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Function') }}</th>
-                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Created_at') }}</th>
+                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Position') }}</th>
+                                <th class="px-4 py-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Ajoute le') }}</th>
                                 <th class="px-4 py-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">{{ __('Actions') }} </th>
                             </tr>
                         </x-slot>
@@ -52,7 +52,7 @@
                                         <a href="{{ route('users.update', $user->id) }}"><i class="fa-solid fa-pen text-green-500 p-1 cursor-pointer text-xs"></i></a>
                                         <form method="post" action="{{ route('users.delete', $user->id) }}">
                                             @csrf
-                                            <button onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
+                                            <button onclick="return confirm('Etes-vous sur de supprimer cette element?')"><i class="fa-solid fa-trash text-red-500 p-1 cursor-pointer text-xs"></i></button>
                                         </form>
                                     </div>
                                 </td>
@@ -60,7 +60,7 @@
                             @empty
                             <tr>
                                 <td colspan="6" class="text-center py-4">
-                                    {{ __('No Users')}}
+                                    {{ __('Table of users is empty')}}
                                 </td>
                             </tr>
                             @endforelse

@@ -46,5 +46,10 @@ class AuthServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        // Add the remark to category
+        Gate::define('add-remark-category', function(User $user){
+            return $user->is_admin == 1;
+        });
     }
 }
