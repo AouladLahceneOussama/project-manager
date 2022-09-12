@@ -24,6 +24,7 @@ php artisan key:generate
 # usage
 ```
 php artisan serve
+npm run dev
 ```  
 > Register to the application with 2 account, one with the partner role and the other with the user role, to test all the functionalities.
 
