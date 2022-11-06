@@ -7,36 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-6 space-x-8">
+            <div class="mb-6 flex justify-between space-x-8">
                 <a href="category/create" class="px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer active:opacity-85 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gray-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">
                     {{ __('Add Category') }}
                 </a>
+
+                <a href="{{ route('archives', $id) }}" class="px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer active:opacity-85 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gray-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">
+                    {{ __('My Archives') }}
+                </a>
             </div>
 
-            <!-- Add Archives -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-4">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="flex justify-between items-center py-5 px-4">
-                        <div>
-                            <span>{{ __('Archives') }} ({{ $archives }})</span>
-                        </div>
-
-                        <form method="post" action="{{ route('archives.create', $id) }}" enctype="multipart/form-data" class="flex justify-center items-center space-x-1">
-                            @csrf
-                            <input type="hidden" name="project_id" value="{{$id}}">
-                            <input name="archive_file" class="w-full text-sm text-gray-600 bg-gray-100 rounded-md border border-gray-300cursor-pointer outline-none focus:outline-none" type="file">
-                            @error('archive_file') <span class="text-red-500 text-xs italic px-2">{{ $message }}</span> @enderror
-
-                            <div class="flex justify-between space-x-8">
-                                <button><i class="fa-solid fa-circle-check text-gray-800 cursor-pointer" id="file"></i></button>
-                                <a href="{{ route('archives', $id) }}"><i class="fa-solid fa-eye text-indigo-500 cursor-pointer"></i></a>
-                            </div>
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
 
             <!-- Case tables -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

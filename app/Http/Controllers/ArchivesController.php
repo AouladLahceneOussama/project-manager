@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archive;
+use App\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,11 @@ class ArchivesController extends Controller
     // Show all the files related to a certain subcategory
     public function index($projectId)
     {
+        $id = $projectId;
         $archives = Archive::where('project_id', $projectId)->get();
-        return view('archives.index', compact('archives'));
+        $folders = Folder::where('project_id', $projectId)->get();        
+
+        return view('archives.index', compact('archives', 'folders', 'id'));
     }
 
     // Save the new file
@@ -21,17 +25,19 @@ class ArchivesController extends Controller
     {
         $request->validate(
             [
-                'archive_file' => 'required'
+                'archive_file' => 'required',
+                'archive_folder' => 'required'
             ],
             [
                 'archive_file.required' => 'Required',
+                'archive_folder.required' => 'Required',
             ]
         );
 
         // Static extentions
         $images = ['jpg', 'png', 'jpeg', 'svg', 'gif'];
         $videos = ['mp4', 'mov', 'wmv', 'flv', 'avi', 'mkv'];
-        $files = ['doc', 'docx', 'txt', 'csv', 'pdf', 'ppt',];
+        $files = ['doc', 'docx', 'txt', 'csv', 'pdf', 'ppt'];
 
         $type = null;
         $file = null;
@@ -53,8 +59,9 @@ class ArchivesController extends Controller
         }
         // dd($path);
         // store to database
-        Archive::create([
+        $archive = Archive::create([
             'project_id' => $request->project_id,
+            'folder_id' => $request->archive_folder,
             'name' => $name,
             'path' =>  $path,
             'type' => $type,

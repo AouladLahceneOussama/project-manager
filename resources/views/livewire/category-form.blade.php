@@ -72,15 +72,6 @@
                     @error("subCategory.$index.title") <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                 </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-4">
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="description_{{ $index }}">
-                        {{ __('Description') }}
-                    </label>
-                    <textarea type="text" rows="3" wire:model="subCategory.{{$index}}.description" name="description" class="text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Description" id="description_{{ $index }}"></textarea>
-                    @error("subCategory.$index.description") <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
-                </div>
-            </div>
 
             <!-- billings form -->
             <div class="w-full mb-3">
@@ -144,7 +135,7 @@
                     <label class="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-1" for="total_{{ $index }}">
                         {{ __('Total') }} (DH)
                     </label>
-                    <input type="text" value="{{ $subCategory[$index]['total'] }}" name="total" disabled class="disabled:opacity-75 disabled:bg-gray-100 text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Total" id="total_{{ $index }}" />
+                    <input type="text" value="{{ rtrim(sprintf('%.2f', $subCategory[$index]['total'], '')) }}" name="total" disabled class="disabled:opacity-75 disabled:bg-gray-100 text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-gray-500 focus:outline-none focus:transition-shadow" placeholder="Total" id="total_{{ $index }}" />
                 </div>
             </div>
 

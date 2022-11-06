@@ -11,6 +11,7 @@ class Archive extends Model
 
     protected $fillable = [
         'project_id',
+        'folder_id',
         'name',
         'original_name',
         'path',
@@ -19,5 +20,10 @@ class Archive extends Model
 
     public function project(){
         return $this->belongsTo(Subcategory::class);
+    }
+
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
     }
 }

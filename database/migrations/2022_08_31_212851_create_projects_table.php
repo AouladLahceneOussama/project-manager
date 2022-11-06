@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('managed_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
-            $table->float('total')->default(0);
+            $table->string('total')->default(0);
             $table->timestamps();
         });
     }

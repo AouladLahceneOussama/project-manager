@@ -33,7 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/update/{id}', [ProjectController::class, 'edit'])->name('projects.update');
     Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
-    Route::get('/projects/pdf', [ProjectController::class, 'generatePdf'])->name('projects.pdf');
     
     // Archives
     Route::get('/projects/{id}/category/archives' ,[ArchivesController::class, 'index'])->name('archives');

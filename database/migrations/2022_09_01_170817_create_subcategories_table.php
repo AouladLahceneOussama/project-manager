@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('categories_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string("title");
-            $table->text('description')->nullable();
-            $table->float('total')->default(0);
+            $table->string('total')->default(0);
             $table->timestamps();
         });
     }

@@ -31,23 +31,26 @@ class CategoryUpdate extends Component
     ];
 
     public function mount()
-    { 
+    {
         $c = Category::with(['subcategories'])->where('id', $this->category_id)->first();
         $this->title = $c->title;
         $this->description = $c->description;
         $this->total = $c->total;
 
         // Initialise the form
-        foreach($c->subcategories as $index => $sub){
-            $this->subCategory[] = ['title' => $sub->title, 'description' => $sub->description, 'total' => $sub->total];
-            
-            foreach($sub->billings as $b){
-                $this->billings[$index][] = ['title' => $b->title, 'info' => $b->info, 'total' => $b->total];
+        foreach ($c->subcategories as $index => $sub) {
+            $this->subCategory[] = ['title' => $sub->title, 'total' => $sub->total];
+
+            if (count($sub->billings) == 0) $this->billings[$index] = [];
+            else {
+                foreach ($sub->billings as $b) {
+                    $this->billings[$index][] = ['title' => $b->title, 'info' => $b->info, 'total' => $b->total];
+                }
             }
         }
-        
 
-    //    dd($this->subCategory, $this->billings);
+
+        //    dd($this->subCategory, $this->billings);
     }
 
     public function render()
@@ -63,7 +66,7 @@ class CategoryUpdate extends Component
         ]);
 
         for ($i = 0; $i < $this->subCategoryRepeat; $i++) {
-            $this->subCategory[] = ['title' => '', 'description' => '', 'total' => 0];
+            $this->subCategory[] = ['title' => '', 'total' => 0];
             $this->billings[count($this->subCategory) - 1] = [];
         }
     }
@@ -101,14 +104,19 @@ class CategoryUpdate extends Component
     {
         // dd($subCategoryIndex);
         $total = array_column($this->billings[$subCategoryIndex], 'total');
-        return array_sum($total);
+        return (string)array_sum($total);
     }
 
     public function updated($name, $value)
     {
+        
         $stacks = explode('.', $name);
-        if ($stacks[0] == 'billings' && $stacks[3] == 'total')
-            $this->subCategory[$stacks[1]]['total'] =  $this->calculateTotal($stacks[1]);
+        
+        if ($stacks[0] == 'billings' && $stacks[3] == 'total'){
+            $sum = (string)$this->calculateTotal($stacks[1]);
+            // dd($sum);
+            $this->subCategory[$stacks[1]]['total'] = $sum;
+        }
     }
 
     public function save()
@@ -119,11 +127,9 @@ class CategoryUpdate extends Component
             'title' => ['required', 'string'],
             'description' => ['required', 'max:255'],
             'subCategory.*.title' => ['required', 'string'],
-            'subCategory.*.description' => ['required', 'max:255'],
-            'subCategory.*.total' => ['required', 'gt:0'],
             "billings.*.*.title" => ['required', 'string'],
-            "billings.*.*.info" => ['required', 'string'],
-            "billings.*.*.total" => ['required', 'gt:0'],
+            // "billings.*.*.info" => ['required', 'string'],
+            // "billings.*.*.total" => ['required', 'gt:0'],
         ]);
 
         // Delete the old record or category
@@ -144,7 +150,6 @@ class CategoryUpdate extends Component
             $subC = Subcategory::create([
                 'categories_id' => $category->id,
                 'title' => $sub['title'],
-                'description' => $sub['description'],
                 'total' => $sub['total'],
             ]);
 

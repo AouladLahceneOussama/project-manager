@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('archives', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->constrained()->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreignId('project_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('folder_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('original_name');
             $table->string('name');
             $table->string('path');
             $table->string('type')->nullable();

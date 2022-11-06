@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Billing extends Model
 {
@@ -16,6 +17,13 @@ class Billing extends Model
         'remark',
         'total'
     ];
+
+    protected function total() : Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => rtrim(sprintf("%.2f", $value), ""),
+        );   
+    }
 
     public function subcategory()
     {

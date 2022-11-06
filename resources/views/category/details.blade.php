@@ -51,7 +51,7 @@
                 <div class="my-4" style="width:48%">
                     <div class="mb-6">
                         <span class="px-6 py-3 font-bold text-center text-white uppercase align-middle border-0 rounded-lg text-xs bg-gray-700">
-                            {{ __('Total') }} : {{ $sub->total}} DH
+                            {{ __('Total') }} : {{ $sub->total }} DH
                         </span>
                     </div>
                     <div class="bg-white shadow-sm rounded-lg p-4 sm:px-6 lg:px-8">
@@ -59,10 +59,7 @@
                             {{ $sub->title}}
                         </p>
 
-                        <p class="text-md rounded-lg bg-white px-3 font-normal text-gray-500">
-                            Description : {{ $sub->description}}
-                        </p>
-
+                        @if(count($sub->billings) > 0)
                         <div class="w-full mt-3 px-3">
                             <span class="text-gray-400 text-xs ">{{ __('Detail of billings')}}</span>
                             <div class="bg-gray-200 w-full h-px"></div>
@@ -94,7 +91,7 @@
                             @endif
                             @endforeach
                         </div>
-
+                        @endif
 
                     </div>
                 </div>

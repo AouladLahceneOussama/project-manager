@@ -46,7 +46,7 @@ class CategoryForm extends Component
     public function mount()
     {
         $this->subCategory = [
-            ['title' => '', 'description' => '', 'total' => 0],
+            ['title' => '', 'total' => 0],
         ];
 
         $this->billings = [
@@ -62,7 +62,7 @@ class CategoryForm extends Component
         ]);
 
         for ($i = 0; $i < $this->subCategoryRepeat; $i++) {
-            $this->subCategory[] = ['title' => '', 'description' => '', 'total' => 0];
+            $this->subCategory[] = ['title' => '', 'total' => 0];
             $this->billings[count($this->subCategory) - 1] = [];
         }
     }
@@ -106,8 +106,12 @@ class CategoryForm extends Component
     public function updated($name, $value)
     {
         $stacks = explode('.', $name);
-        if ($stacks[0] == 'billings' && $stacks[3] == 'total')
-            $this->subCategory[$stacks[1]]['total'] =  $this->calculateTotal($stacks[1]);
+        if ($stacks[0] == 'billings' && $stacks[3] == 'total'){
+            $sum = (string)$this->calculateTotal($stacks[1]);
+            // dd($sum);
+            $this->subCategory[$stacks[1]]['total'] = $sum;
+        }
+            
     }
 
     public function save()
@@ -118,11 +122,9 @@ class CategoryForm extends Component
             'title' => ['required', 'string'],
             'description' => ['required', 'max:255'],
             'subCategory.*.title' => ['required', 'string'],
-            'subCategory.*.description' => ['required', 'max:255'],
-            'subCategory.*.total' => ['required', 'gt:0'],
             "billings.*.*.title" => ['required', 'string'],
-            "billings.*.*.info" => ['required', 'string'],
-            "billings.*.*.total" => ['required', 'gt:0'],
+            // "billings.*.*.info" => ['required', 'string'],
+            // "billings.*.*.total" => ['required', 'gt:0'],
         ]);
 
         // Save the category
@@ -139,7 +141,6 @@ class CategoryForm extends Component
             $subC = Subcategory::create([
                 'categories_id' => $category->id,
                 'title' => $sub['title'],
-                'description' => $sub['description'],
                 'total' => $sub['total'],
             ]);
 
@@ -156,7 +157,7 @@ class CategoryForm extends Component
 
 
         // update the project total price
-        $newTotal = Category::where('project_id', $this->project_id)->sum('total');
+        $newTotal = (string)Category::where('project_id', $this->project_id)->sum('total');
         Project::where('id', $this->project_id)->update([
             'total' => $newTotal
         ]);

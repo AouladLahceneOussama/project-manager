@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('subcategories_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
+            $table->string('remark')->nullable();
+            $table->string('info');
             $table->float('total');
             $table->timestamps();
         });

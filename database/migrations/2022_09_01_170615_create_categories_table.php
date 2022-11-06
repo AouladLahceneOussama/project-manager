@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('managed_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string("title");
             $table->text('description');
-            $table->float('total')->default(0);
+            $table->string('total')->default(0);
             $table->timestamps();
         });
     }
